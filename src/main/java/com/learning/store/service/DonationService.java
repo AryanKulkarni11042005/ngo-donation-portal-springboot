@@ -1,5 +1,6 @@
 package com.learning.store.service;
 
+import com.learning.store.dto.DonationRequestDto;
 import com.learning.store.dto.DonationSummaryDto;
 import com.learning.store.exception.ResourceNotFoundException;
 import org.springframework.stereotype.Service;
@@ -49,12 +50,21 @@ public class DonationService {
                 .orElseThrow(() -> new ResourceNotFoundException("Donation with id " + id + " not found"));
         return toDto(donation);
     }
+
     @Transactional
-    public Donation createDonation(Donation donation) {
+    public DonationSummaryDto createDonation(DonationRequestDto dto) {
+        Campaign campaign = campaignRepository.findById(dto.getCampaignId())
+                .orElseThrow(() -> new ResourceNotFoundException("Campaign with id " + dto.getCampaignId() + " not found"));
+        Donation donation = new Donation();
+        donation.setCampaign(campaign);
+        donation.setDonorName(dto.getDonorName());
+        donation.setDonorEmail(dto.getDonorEmail());
+        donation.setDonorPhone(dto.getDonorPhone());
+        donation.setAmount(dto.getAmount());
+        donation.setTransactionId(dto.getTransactionId());
         Donation savedDonation = donationRepository.save(donation);
-        Campaign campaign = savedDonation.getCampaign();
         campaign.setCurrentAmount(campaign.getCurrentAmount().add(savedDonation.getAmount()));
         campaignRepository.save(campaign);
-        return savedDonation;
+        return toDto(savedDonation);
     }
 }

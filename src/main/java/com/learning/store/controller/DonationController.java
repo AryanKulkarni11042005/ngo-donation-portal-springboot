@@ -1,8 +1,10 @@
 package com.learning.store.controller;
 
+import com.learning.store.dto.DonationRequestDto;
 import com.learning.store.dto.DonationSummaryDto;
-import com.learning.store.entity.Donation;
 import com.learning.store.service.DonationService;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -26,4 +28,10 @@ public class DonationController {
     public DonationSummaryDto getDonationById(@PathVariable Integer id) {
         return donationService.getDonationById(id);
     }
+    @PostMapping
+    public ResponseEntity<DonationSummaryDto> createDonation(@RequestBody DonationRequestDto dto) {
+        DonationSummaryDto created = donationService.createDonation(dto);
+        return ResponseEntity.status(HttpStatus.CREATED).body(created);
+    }
+
 }
