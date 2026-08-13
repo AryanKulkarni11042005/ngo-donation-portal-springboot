@@ -21,7 +21,6 @@ public class User {
     private String email;
     @Column(name = "password_hash")
     private String passwordHash;
-    @Getter
     private Role role;
     @Column(name = "created_at", insertable = false, updatable = false)
     private LocalDateTime createdAt;

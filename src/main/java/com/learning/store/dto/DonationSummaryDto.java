@@ -11,7 +11,8 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 public class DonationSummaryDto {
         private Integer id;
-        private CampaignSummaryDto campaign;
+        private Integer campaignId;
+        private String campaignTitle;
         private String donorName;
         private String donorEmail;
         private String donorPhone;
@@ -21,4 +22,3 @@ public class DonationSummaryDto {
         private DonationStatus status;
         private LocalDateTime createdAt;
 }
-

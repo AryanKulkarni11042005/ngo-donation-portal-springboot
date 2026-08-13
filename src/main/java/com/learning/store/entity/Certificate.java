@@ -19,6 +19,7 @@ public class Certificate {
     private String certificateCode;
     @Column(name = "verification_id")
     private String verificationId;
+    @org.hibernate.annotations.Generated(event = org.hibernate.generator.EventType.INSERT)
     @Column(name = "issued_at", insertable = false, updatable = false)
     private LocalDateTime issuedAt;
 }

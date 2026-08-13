@@ -6,6 +6,8 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.Generated;
+import org.hibernate.generator.EventType;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -34,6 +36,8 @@ public class Donation {
     @Column(name = "payment_status")
     private PaymentStatus paymentStatus;
     private DonationStatus status;
+    // Populated by the column default; read back so the response carries it.
+    @Generated(event = EventType.INSERT)
     @Column(name = "created_at", insertable = false, updatable = false)
     private LocalDateTime createdAt;
 }

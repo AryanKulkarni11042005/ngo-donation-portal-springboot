@@ -5,6 +5,9 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.Generated;
+import org.hibernate.annotations.UpdateTimestamp;
+import org.hibernate.generator.EventType;
 
 import java.math.BigDecimal;
 import java.time.*;
@@ -32,8 +35,10 @@ public class Campaign {
     @ManyToOne
     @JoinColumn(name = "created_by")
     private User createdBy;
+    @Generated(event = EventType.INSERT)
     @Column(name = "created_at", insertable = false, updatable = false)
     private LocalDateTime createdAt;
+    @UpdateTimestamp
     @Column(name = "updated_at", insertable = false)
     private LocalDateTime updatedAt;
 
