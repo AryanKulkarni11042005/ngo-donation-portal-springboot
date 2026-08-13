@@ -3,6 +3,8 @@ package com.learning.store.service;
 import com.learning.store.dto.DonationRequestDto;
 import com.learning.store.dto.DonationSummaryDto;
 import com.learning.store.exception.ResourceNotFoundException;
+import com.learning.store.model.DonationStatus;
+import com.learning.store.model.PaymentStatus;
 import org.springframework.stereotype.Service;
 import com.learning.store.repository.DonationRepository;
 import com.learning.store.entity.Donation;
@@ -64,6 +66,8 @@ public class DonationService {
         donation.setTransactionId(dto.getTransactionId());
         Donation savedDonation = donationRepository.save(donation);
         campaign.setCurrentAmount(campaign.getCurrentAmount().add(savedDonation.getAmount()));
+        donation.setPaymentStatus(PaymentStatus.SUCCESS);
+        donation.setStatus(DonationStatus.PENDING);
         campaignRepository.save(campaign);
         return toDto(savedDonation);
     }
